@@ -28,4 +28,6 @@ while ($obj = $resultado->fetch_assoc()) :
     $rows["data"][] = $noticias;
 endwhile;
 
+
+
 echo json_encode($rows);
