@@ -1,5 +1,8 @@
 <?php
+session_start();
 include ("validacao.php");
+$usuario = substr((explode('@', $_SESSION['UsuarioID']))[1] , 0,3);
+$fonte = ($usuario == 'cjf') ? strtoupper($usuario) : strtoupper(substr((explode('@', $_SESSION['UsuarioID']))[1] , 0,4));
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -115,7 +118,7 @@ include ("validacao.php");
                                         </form>
                                         <!-- Fim dos campos do formulário -->
                                         <div id="modalDetalhes" class="modal fade top-modal-without-space" role="dialog">                                              
-                                            <div class="modal-dialog">                                                                      
+                                            <div class="modal-dialog" style="min-width: 620px;">
                                                 <div class="modal-content">                                                                 
                                                     <div class="modal-header">                                                              
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>           
@@ -123,18 +126,20 @@ include ("validacao.php");
                                                     </div>  
                                                     <form method="POST" action="FuncoesNoticias.php" enctype="multipart/form-data">
                                                         <div class="modal-body" style="background-color: #f1f2f7;">                                                            
-                                                            <section class = "panel" style="position: relative;width:500px; left: 30px; right: auto;"> 
+                                                            <section class = "panel" style="position: relative;">
                                                                 <div class="revenue-head9">           
                                                                     <h3><b>Notícias:</b></h3>         
                                                                 </div>                                
                                                                 <div class = "flat-carousal" style="background: white;">                         
-                                                                    <div id="owl-demo" class="owl-carousel owl-theme" style="height: 410px;">    
+                                                                    <div id="owl-demo" class="owl-carousel owl-theme" style="height: 460px; max-width: 570px;">
                                                                         <div class = "text-center">
                                                                             <a id="enderecoVisualizar" data-toggle="modal"><br>
                                                                                 <span id="spanBr"></span>
-                                                                                <center><img id="imgVisualizar" class = "img-responsive" /></center>
-                                                                                <br> 
-                                                                                <h1 id="tituloVisualizar" style="font-size: 14pt;font-family: inherit;font-weight: 400"></h1>
+                                                                                <center><img id="imgVisualizar" class = "img-responsive" style="max-width: 90%"/></center>
+                                                                                <br>
+                                                                                <h1 id="tituloVisualizar"
+                                                                                    style="font-size: 14pt;font-family: inherit;font-weight: 400;margin-bottom: 5px"></h1>
+                                                                                <p id="fonte" style=' text-align: center; font-size: 90%; font-style: italic'></p>
                                                                             </a>
                                                                         </div>
                                                                     </div>
@@ -282,6 +287,8 @@ include ("validacao.php");
         <!--script for this page only-->
 
         <script>
+            var fonte = "<?php echo $fonte; ?>";
+
             //Quando clica no botão continuar, a imagem inserida é enviada ao servidor, cortada, e retornado o nome da imagem cortada. Depois, é inserida no modal detalhes, junto oom título e link,
             //e o modal é exibido ao usuário com a pré-visualização da notícia
             $("#cadastro").submit(function () {
@@ -291,6 +298,7 @@ include ("validacao.php");
                 $("#enderecoFrmEnviar").val($("#endereco").val());
                 $("#tituloNoticiaInterna").html($("#titulo").val());
                 $("#textoNoticiaInterna").html(CKEDITOR.instances.texto.getData());
+                $("#fonte").html("Fonte: "+fonte);
                 $("#textoFrmEnviar").val(CKEDITOR.instances.texto.getData());
                 xmlhttp = new XMLHttpRequest();
                 fd = new FormData(this);

@@ -179,11 +179,13 @@ if (isset($_SESSION['imagemTemp'])) {
                                                             <div class="btn-group" data-toggle="buttons">
                                                                 <label class="btn btn-default option3">
                                                                     <input type="radio" onclick="ativa_sim()"
-                                                                           name="exibir_historico" id="option3" value="1"> Sim
+                                                                           name="exibir_historico" id="option3"
+                                                                           value="1"> Sim
                                                                 </label>
                                                                 <label class="btn btn-default option4">
                                                                     <input type="radio" onclick="ativa_nao()"
-                                                                           name="exibir_historico" id="option4" value="0"> Não
+                                                                           name="exibir_historico" id="option4"
+                                                                           value="0"> Não
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -232,11 +234,13 @@ if (isset($_SESSION['imagemTemp'])) {
                                                             <div class="btn-group" data-toggle="buttons">
                                                                 <label class="btn btn-default option1interna">
                                                                     <input type="radio" onclick="ativa_sim()"
-                                                                           name="ativada" id="option1interna" value="1"> Sim
+                                                                           name="ativada" id="option1interna" value="1">
+                                                                    Sim
                                                                 </label>
                                                                 <label class="btn btn-default option2interna">
                                                                     <input type="radio" onclick="ativa_nao()"
-                                                                           name="ativada" id="option2interna" value="0"> Não
+                                                                           name="ativada" id="option2interna" value="0">
+                                                                    Não
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -247,11 +251,13 @@ if (isset($_SESSION['imagemTemp'])) {
                                                             <div class="btn-group" data-toggle="buttons">
                                                                 <label class="btn btn-default option3interna">
                                                                     <input type="radio" onclick="ativa_sim()"
-                                                                           name="exibir_historico" id="option3interna" value="1"> Sim
+                                                                           name="exibir_historico" id="option3interna"
+                                                                           value="1"> Sim
                                                                 </label>
                                                                 <label class="btn btn-default option4interna">
                                                                     <input type="radio" onclick="ativa_nao()"
-                                                                           name="exibir_historico" id="option4interna" value="0"> Não
+                                                                           name="exibir_historico" id="option4interna"
+                                                                           value="0"> Não
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -268,7 +274,7 @@ if (isset($_SESSION['imagemTemp'])) {
                                     </div>
                                 </div>
                                 <div id="modalDetalhes" class="modal fade top-modal-without-space" role="dialog">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog" style="min-width: 620px;">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;
@@ -277,13 +283,13 @@ if (isset($_SESSION['imagemTemp'])) {
                                             </div>
                                             <div class="modal-body" style="background-color: #f1f2f7;">
                                                 <section class="panel"
-                                                         style="position: relative;width:500px; left: 30px; right: auto;">
+                                                         style="">
                                                     <div class="revenue-head9">
                                                         <h3><b>Notícias:</b></h3>
                                                     </div>
                                                     <div class="flat-carousal" style="background: white;">
                                                         <div id="owl-demo" class="owl-carousel owl-theme"
-                                                             style="height: 390px;">
+                                                             style="height: 460px; max-width: 570px;">
                                                             <div class="text-center">
                                                                 <a id="enderecoVisualizar" target="_blank"
                                                                    class="enderecoNoticia"><br>
@@ -292,7 +298,9 @@ if (isset($_SESSION['imagemTemp'])) {
                                                                                  class="img-responsive"/></center>
                                                                     <br>
                                                                     <h1 id="tituloVisualizar"
-                                                                        style="font-size: 14pt;font-family: inherit;font-weight: 400"></h1>
+                                                                        style="font-size: 14pt;font-family: inherit;font-weight: 400;margin-bottom: 5px"></h1>
+                                                                    <p id="fonte"
+                                                                       style=' text-align: center; font-size: 90%; font-style: italic'></p>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -512,7 +520,7 @@ if (isset($_SESSION['message'])) {
                 "lengthMenu": "Mostrar _MENU_ registros por página",
                 "zeroRecords": "Não foram encontrados registros",
                 "info": "Página _PAGE_ de _PAGES_",
-                "infoEmpty": "Nenhum registro disponível",
+                "infoEmpty": "Nenhum registro encontrado.",
                 "infoFiltered": "(filtered from _MAX_ total records)"
             },
             responsive: true
@@ -549,6 +557,7 @@ if (isset($_SESSION['message'])) {
                         $("#imgVisualizar").css("max-width", data.tamanho_imagem + "%");
                         $("#spanBr").html(data.espacos);
                         $("#tituloVisualizar").html(data.titulo);
+                        $("#fonte").html('Fonte: ' + data.fonte);
                         $("#ativada").val(data.ativada);
                         $("#ativadaInterna").val(data.ativada);
                         $("#titulo").val(data.titulo);
@@ -579,31 +588,31 @@ if (isset($_SESSION['message'])) {
             xmlhttp.send(fd);
         });
 
-        function tratarBotoesNoticias(ativada, exibir_historico, tipo_noticia){
+        function tratarBotoesNoticias(ativada, exibir_historico, tipo_noticia) {
             $(".active").removeClass('active');
             if (ativada == 1) {
                 $('#group-historico-externa').hide();
                 $('#group-historico-interna').hide();
-                $("#option1"+tipo_noticia).prop("checked", true);
+                $("#option1" + tipo_noticia).prop("checked", true);
 
-                $("label.option1"+tipo_noticia).addClass("active");
+                $("label.option1" + tipo_noticia).addClass("active");
             }
             else {
                 $('#group-historico-externa').show();
                 $('#group-historico-interna').show();
-                $("#option2"+tipo_noticia).prop("checked", true);
-                $("label.option2"+tipo_noticia).addClass("active");
+                $("#option2" + tipo_noticia).prop("checked", true);
+                $("label.option2" + tipo_noticia).addClass("active");
             }
-            if(exibir_historico == 1){
-                $("#option3"+tipo_noticia).prop("checked", true);
-                $("label.option3"+tipo_noticia).addClass("active");
+            if (exibir_historico == 1) {
+                $("#option3" + tipo_noticia).prop("checked", true);
+                $("label.option3" + tipo_noticia).addClass("active");
             } else {
-                $("#option4"+tipo_noticia).prop("checked", true);
-                $("label.option4"+tipo_noticia).addClass("active");
+                $("#option4" + tipo_noticia).prop("checked", true);
+                $("label.option4" + tipo_noticia).addClass("active");
             }
         }
 
-        $("input[name=ativada]").change(function(){
+        $("input[name=ativada]").change(function () {
 //            alert("ativada "+this.value);
             $("#option3").prop("checked", true);
             $("#option3interna").prop("checked", true);
@@ -611,7 +620,7 @@ if (isset($_SESSION['message'])) {
             $("label.option4interna").removeClass("active");
             $("label.option3").removeClass("active");
             $("label.option3interna").removeClass("active");
-            if(this.value == 1){
+            if (this.value == 1) {
                 $('#group-historico-externa').hide();
                 $('#group-historico-interna').hide();
 
@@ -627,7 +636,7 @@ if (isset($_SESSION['message'])) {
 //            alert("ativada "+this.value+" historico "+$("input[name=exibir_historico]").val());
         });
 
-        $("input[name=exibir_historico]").change(function(){
+        $("input[name=exibir_historico]").change(function () {
 //            alert("exibir_historico "+this.value);
         });
 

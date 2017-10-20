@@ -1,5 +1,4 @@
 <?php
-//include_once './validacao.php';
 
 if (!isset($_SESSION)) {
     session_start();
@@ -10,27 +9,11 @@ if (!isset($_POST))
 include_once '../conn.php';
 include_once './autoload.php';
 
-use Classes\ControleNoticia;
+use control\ControleNoticia;
 
 $requisicao = $_POST['tipo_de_requisicao'];
 $controleNoticia = new ControleNoticia($conn);
 
-//if ($requisicao == "alterar") {
-//    $resultado = alterar($controleNoticia);
-//} elseif ($requisicao == "inserirExterna") {
-//    $resultado = inserirExterna($controleNoticia);
-//} elseif ($requisicao == "inserirInterna") {
-//    $resultado = inserirInterna($controleNoticia);
-//} elseif ($requisicao == "remover") {
-//    $resultado = remover($controleNoticia);
-//} elseif ($requisicao == "buscarPorId") {
-//    buscarPorId($controleNoticia);
-//} elseif ($requisicao == "apagarTemp") {
-//    unlink('croped/' . $_SESSION['imagemTemp']);
-//    unset($_SESSION['imagemTemp']);
-//} elseif ($requisicao == "alterarImg") {
-//    echo $controleNoticia->alterarImagem($_POST['tamanho'], $_POST['espacos'], $_POST['id']);
-//}
 
 switch ($requisicao){
     case "alterar":
@@ -99,6 +82,12 @@ function remover($controleNoticia) {
 }
 
 function buscarPorId($controleNoticia) {
-    $result = $controleNoticia->buscarPorId($_POST['id']);
-    print_r(json_encode($result->fetch_assoc()));
+    $resultado = $controleNoticia->buscarPorId($_POST['id']);
+
+    $result = $resultado->fetch_assoc();
+    $usuario = substr((explode('@', $result['usuario']))[1] , 0,3);
+    $fonte = ($usuario == 'cjf') ? strtoupper($usuario) : strtoupper(substr((explode('@', $result['usuario']))[1] , 0,4));
+    $result['fonte'] = $fonte;
+
+    print_r(json_encode($result));
 }

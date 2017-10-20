@@ -45,6 +45,9 @@
                     $result = mysqli_query($conn, $query);
 
                     while ($obj = mysqli_fetch_object($result)) {
+//                        echo "<script>alert('$obj->usuario');</script>";
+                        $usuario = substr((explode('@', $obj->usuario))[1] , 0,3);
+                        $fonte = ($usuario == 'cjf') ? strtoupper($usuario) : strtoupper(substr((explode('@', $obj->usuario))[1] , 0,4));
                         $id = $obj->id;
                         (int) $tamanho = $obj->tamanho_imagem;
                         $foto = $obj->nome_imagem;
@@ -59,7 +62,7 @@
                         . "	     $obj->espacos"
                         . "	         <center><img src='Imagens/$foto' style='max-width: $tamanho%;' class=''></center>"
                         . "	         <br>"
-                        . "	         <h1>$obj->titulo<h1>"
+                        . "	         <h1 style='margin-bottom: 5px'>$obj->titulo</h1><p style=' text-align: center; font-size: 90%; font-style: italic'>Fonte: $fonte</p>"
                         . "	     </a>"
                         . "	</div>"
                         . "</center>";
